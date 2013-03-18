@@ -1,10 +1,22 @@
+SLIDES = slides
+SLIDES_HTML = index.html
+SLIDES_DEPS = index.html parallel_12/speedup_linear.svg parallel_48/runtime_linear.svg
+
 REMOTE = origin
 
-TALKS = fenics13
+server:
+	ipython notebook --pylab inline --no-browser
 
-.PHONY: $(TALKS)
+slides: plot
+	nbconvert.py --format reveal $(SLIDES).ipynb
+	mv $(SLIDES)_slides.html $(SLIDES_HTML)
 
-gh-pages: $(TALKS)
+plot:
+	(cd parallel_48; python runtime_linear.plot.py)
+	(cd parallel_12; python speedup.py)
+
+gh-pages: slides
+	git add $(SLIDES_DEPS)
 	-git branch -D old/gh-pages
 	-git branch -m gh-pages old/gh-pages
 	git checkout -b gh-pages
