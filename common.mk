@@ -7,3 +7,6 @@ server:
 slides:
 	nbconvert.py --format reveal $(SLIDES).ipynb
 	mv $(SLIDES)_slides.html $(SLIDES_HTML)
+
+gh-pages:
+	git add $(SLIDES_DEPS)
