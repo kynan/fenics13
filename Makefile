@@ -1,6 +1,6 @@
 SLIDES = slides
 SLIDES_HTML = index.html
-SLIDES_DEPS = index.html parallel_12/speedup_linear.svg parallel_48/runtime_linear.svg
+SLIDES_DEPS = index.html parallel_12/speedup_linear.svg parallel_48/speedup_linear.svg
 
 REMOTE = origin
 
@@ -12,7 +12,7 @@ slides: plot
 	mv $(SLIDES)_slides.html $(SLIDES_HTML)
 
 plot:
-	(cd parallel_48; python runtime_linear.plot.py)
+	(cd parallel_48; python speedup_linear.plot.py)
 	(cd parallel_12; python speedup_linear.plot.py)
 
 gh-pages: slides
