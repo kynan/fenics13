@@ -13,7 +13,7 @@ slides: plot
 
 plot:
 	(cd parallel_48; python runtime_linear.plot.py)
-	(cd parallel_12; python speedup.py)
+	(cd parallel_12; python speedup_linear.plot.py)
 
 gh-pages: slides
 	git add $(SLIDES_DEPS)
