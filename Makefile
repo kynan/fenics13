@@ -1,17 +1,19 @@
 SLIDES = slides
 SLIDES_HTML = index.html
-SLIDES_DEPS = index.html parallel_12/speedup_linear.svg parallel_48/speedup_linear.svg
-
+PLOT_DEPS = parallel_12/speedup_linear.svg parallel_48/speedup_linear.svg
+SLIDES_DEPS = $(SLIDES_HTML) $(PLOT_DEPS)
 REMOTE = origin
 
 server:
-	ipython notebook --pylab inline --no-browser
+	jupyter notebook --pylab inline --no-browser
 
 slides: plot
-	nbconvert.py --format reveal $(SLIDES).ipynb
-	mv $(SLIDES)_slides.html $(SLIDES_HTML)
+	jupyter nbconvert --to slides $(SLIDES).ipynb
+	mv $(SLIDES).slides.html $(SLIDES_HTML)
 
-plot:
+plot: $(PLOT_DEPS)
+
+$(PLOT_DEPS): $@
 	(cd parallel_48; python speedup_linear.plot.py)
 	(cd parallel_12; python speedup_linear.plot.py)
 
